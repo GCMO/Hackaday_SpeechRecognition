@@ -1,0 +1,27 @@
+import './App.css';
+// import { useSpeechRecognition } from 'react-speech-recognition-hook';
+import React, {useState} from 'react';
+import {speech2textRef} from './server/firebase.js';
+import {transcript} from '../Dictaphone/Dictaphone.js';
+
+const SpeechNote = (transcript) => {
+  const [note, setNote] = useState('');
+
+  const createSpeechNote = (e) => {
+    e.preventDefault();
+    const item = {
+      note: transcript,
+      done: false,
+      createdAt: Date.now()
+    };
+    speech2textRef.push(item);
+    setNote('');
+  }
+
+
+return (
+  <form onSubmit={(createNote)}>
+    <input type='text' value='Speech Note' onChange={(e) => setNote(e.target.value) } placeholder='Your SpeechNotes will be here'/>
+  </form>
+  )
+};  
